@@ -143,8 +143,23 @@ def clear_convo():
 
 # Initialize the Streamlit page configuration and session state for chat
 def init():
-    st.set_page_config(page_title="Llama Lawyer", page_icon=":robot_face: ")
-    st.sidebar.title("LLAMA LAYWER")
+    st.set_page_config(page_title="Llama Lawyer", page_icon=":robot_face:")
+    st.sidebar.title("LLAMA LAWYER")
+
+    # Sidebar styling and color configuration
+    st.sidebar.markdown("""
+    <style>
+        .sidebar .sidebar-content {
+            background-color: #f0f2f6;
+            color: #333;
+        }
+        .sidebar .button {
+            background-color: #1a73e8;
+            color: white;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
     if "messages" not in st.session_state:
         st.session_state["messages"] = []
 
@@ -157,31 +172,26 @@ if __name__ == "__main__":
         "Clear Conversation", key="clear", on_click=clear_convo
     )
 
-    # File uploader for users to upload files for indexing
-    file = st.file_uploader(
-        "Choose a file to index...", type=["docx", "pdf", "txt", "md"]
-    )
-
     # Display all uploaded files in the "uploads" directory on the sidebar
     st.sidebar.markdown("## Uploaded Files")
     uploaded_files = os.listdir("uploads")
     for f in uploaded_files:
         st.sidebar.markdown(f)
-    # Additional sidebar info regarding the persistence of uploaded files
-    # st.sidebar.info(
-    #     """This application stores uploaded files in the 'uploads' directory upon upload and then indexes them into a 
-    #                 locally persisted Chroma Document Store so that you may re-use your documentation as necessary."""
-    # )
+
+    # File uploader for users to upload files for indexing
+    file = st.file_uploader(
+        "Upload a document...", type=["docx", "pdf", "txt", "md"]
+    )
 
     # Button to trigger file indexing upon clicking "Upload File"
-    clicked = st.button("Upload File", key="Upload")
+    clicked = st.button("Index Document", key="Upload")
     if file and clicked:
-        with st.spinner("Wait for it..."):
+        with st.spinner("Indexing document..."):
             indexing_pipe(file)
-        st.success("Indexed {0}!".format(file.name))
+        st.success(f"Document '{file.name}' has been successfully indexed.")
 
     # Chat input field for user queries
-    user_input = st.chat_input("Say something")
+    user_input = st.chat_input("Type your question here")
 
     # Invoke the assistant when user input is provided
     if user_input:
