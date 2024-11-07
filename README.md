@@ -55,7 +55,13 @@ This tool lets you interact with your PDFs, TXT, or Docx files & LLMs entirely o
    ```
    python -m streamlit run LLM_Chat_Interface.py
    ```
+   1. **Note**
+      If you get error 403 when uploading files, redeploy the app like so, do disable CORS:
+      ```
+      python -m streamlit run LLM_Chat_Interface.py --server.enableXsrfProtection false
+      ```
 3. Upload your documents and start chatting!
+
 
 
 

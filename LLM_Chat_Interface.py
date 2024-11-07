@@ -78,11 +78,8 @@ def indexing_pipe(filename):
     os.makedirs("uploads", exist_ok=True)
     # Save the uploaded file to disk
     file_path = os.path.join("uploads", filename.name)
-    # with open(file_path, "wb") as f:
-    #     f.write(file.getbuffer())
-    if file:
-        with open(file_path, "wb") as f:
-            f.write(file.read())
+    with open(file_path, "wb") as f:
+        f.write(file.getbuffer())
 
 
     # Run the indexing pipeline on the saved file
