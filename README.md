@@ -1,5 +1,5 @@
 # byoLLM
-Bring your own LLM, local UI for your purposes.
+Bring Your Own LLM, local UI for your purposes.
 
 This Project is targeted to allow peopl
 
